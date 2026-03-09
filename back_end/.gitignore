@@ -1,0 +1,41 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environment
+venv/
+.env/
+.env
+
+# Temporary audio files
+temp_audio/
+*.wav
+
+# Uploaded files
+uploads/
+uploaded_docs/
+uploaded_content/
+
+# Vector database
+faiss_index/
+vector_store/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# IDE
+.vscode/
+.idea/
+
+# Build
+dist/
+build/
+
+# Python packaging
+*.egg-info/
