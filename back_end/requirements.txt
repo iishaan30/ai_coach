@@ -15,12 +15,10 @@ python-pptx
 unstructured
 beautifulsoup4
 
-faster-whisper
-TTS==0.22.0
-soundfile
+deepgram-sdk
+elevenlabs
 
 numpy
-scipy
 
 pydantic
 python-dotenv
