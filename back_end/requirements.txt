@@ -6,7 +6,6 @@ langchain
 langchain-core
 langchain-community
 langchain-groq
-
 groq
 
 faiss-cpu
@@ -17,7 +16,7 @@ unstructured
 beautifulsoup4
 
 faster-whisper
-TTS
+TTS==0.22.0
 soundfile
 
 numpy
