@@ -4,11 +4,13 @@ import json
 
 from core.interrupt import decide_coach_action, generate_slide_narration
 from rag.rag_coach import ask_coach
-from voice.tts.coqui_tts import CoquiTTSProvider
-from voice.stt.whisper_stt import whisper_transcribe
+# from voice.tts.coqui_tts import CoquiTTSProvider
+# from voice.stt.whisper_stt import whisper_transcribe
+from voice.tts.elevenlabs_tts import synthesize
+from voice.stt.deepgram_stt import transcribe_audio
 router = APIRouter()
 
-tts = CoquiTTSProvider()
+# tts = CoquiTTSProvider()
 
 class CoachSession:
 
@@ -71,7 +73,7 @@ async def coach_socket(ws: WebSocket):
             })
 
             # Generate narration speech
-            audio = await asyncio.to_thread(tts.synthesize, narration)
+            audio = await asyncio.to_thread(synthesize, narration)
 
             if audio:
                 await ws.send_bytes(audio)
@@ -130,7 +132,7 @@ async def coach_socket(ws: WebSocket):
                         })
 
                         # Generate answer speech
-                        audio = await asyncio.to_thread(tts.synthesize, answer)
+                        audio = await asyncio.to_thread(synthesize, narration)
 
                         if audio:
                             await ws.send_bytes(audio)
@@ -146,10 +148,7 @@ async def coach_socket(ws: WebSocket):
                             "content": session.current_narration
                         })
 
-                        audio = await asyncio.to_thread(
-                            tts.synthesize,
-                            session.current_narration
-                        )
+                        audio = await asyncio.to_thread(synthesize, narration)
 
                         if audio:
                             await ws.send_bytes(audio)
@@ -170,7 +169,7 @@ async def coach_socket(ws: WebSocket):
                     audio_bytes = message["bytes"]
 
                     # Convert speech → text
-                    question = whisper_transcribe(audio_bytes)
+                    question = transcribe_audio(audio_bytes)
 
                     if not question:
                         print("No speech detected")
@@ -202,7 +201,7 @@ async def coach_socket(ws: WebSocket):
                     })
 
                     # Generate answer speech
-                    audio = await asyncio.to_thread(tts.synthesize, answer)
+                    audio = await asyncio.to_thread(synthesize, narration)
 
                     if audio:
                         await ws.send_bytes(audio)
